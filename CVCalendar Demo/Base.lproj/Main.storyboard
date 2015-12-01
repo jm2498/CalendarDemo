@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--Calendar Appearance Delegate-->
+        <scene sceneID="ufC-wZ-h7g">
+            <objects>
+                <viewController id="vXZ-lx-hvc" customClass="ViewController" customModule="SmartCalendar" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
+                        <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="January, 2015" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xf5-AN-qLk">
+                                <rect key="frame" x="237" y="28" width="127" height="24"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZPD-eB-kRA" customClass="CVCalendarMenuView" customModule="SmartCalendar" customModuleProvider="target">
+                                <rect key="frame" x="16" y="71" width="568" height="24"/>
+                                <animations/>
+                                <connections>
+                                    <outlet property="menuViewDelegate" destination="vXZ-lx-hvc" id="S19-Z5-mn8"/>
+                                </connections>
+                            </view>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T1w-UY-QHC" customClass="CVCalendarView" customModule="SmartCalendar" customModuleProvider="target">
+                                <rect key="frame" x="16" y="103" width="568" height="300"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="300" id="3oZ-He-brt">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="480"/>
+                                    </constraint>
+                                </constraints>
+                                <connections>
+                                    <outlet property="calendarAppearanceDelegate" destination="vXZ-lx-hvc" id="esW-84-Ric"/>
+                                    <outlet property="calendarDelegate" destination="vXZ-lx-hvc" id="BGr-mw-JIs"/>
+                                </connections>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="izK-WF-YDE">
+                                <rect key="frame" x="16" y="25" width="38" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Today">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="todayMonthView" destination="vXZ-lx-hvc" eventType="touchUpInside" id="lz7-7l-If4"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fDe-SH-HDN">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="Add"/>
+                                <connections>
+                                    <action selector="setEventInfo" destination="vXZ-lx-hvc" eventType="touchUpInside" id="PcO-Ik-cjP"/>
+                                </connections>
+                            </button>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fzU-Ad-r5k">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <subviews>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="gLe-cb-r5j">
+                                        <rect key="frame" x="0.0" y="-15" width="118" height="31"/>
+                                        <variation key="widthClass=compact" fixedFrame="YES">
+                                            <rect key="frame" x="6" y="125" width="348" height="31"/>
+                                        </variation>
+                                    </slider>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Event Title" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="eT0-f0-1Gy">
+                                        <rect key="frame" x="-25" y="-30" width="97" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <variation key="widthClass=compact" fixedFrame="YES">
+                                            <rect key="frame" x="8" y="8" width="344" height="30"/>
+                                        </variation>
+                                    </textField>
+                                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="d2U-d5-mfp">
+                                        <rect key="frame" x="-160" y="-108" width="320" height="216"/>
+                                        <date key="date" timeIntervalSinceReferenceDate="470513507.54004699">
+                                            <!--2015-11-29 18:11:47 +0000-->
+                                        </date>
+                                        <variation key="widthClass=compact" fixedFrame="YES">
+                                            <rect key="frame" x="0.0" y="163" width="360" height="150"/>
+                                        </variation>
+                                    </datePicker>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Duration" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bHb-Gh-yGA">
+                                        <rect key="frame" x="-25" y="-30" width="97" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <variation key="widthClass=compact" fixedFrame="YES">
+                                            <rect key="frame" x="8" y="46" width="344" height="30"/>
+                                        </variation>
+                                    </textField>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="50" minValue="0.0" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="S0L-cW-F4C">
+                                        <rect key="frame" x="0.0" y="-15" width="118" height="31"/>
+                                        <variation key="widthClass=compact" fixedFrame="YES">
+                                            <rect key="frame" x="6" y="87" width="348" height="31"/>
+                                        </variation>
+                                        <connections>
+                                            <action selector="changeWorkLoad:" destination="vXZ-lx-hvc" eventType="valueChanged" id="JBa-yl-A1A"/>
+                                        </connections>
+                                    </slider>
+                                </subviews>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="300" id="fgp-je-VNq"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="subviews">
+                                        <exclude reference="gLe-cb-r5j"/>
+                                        <exclude reference="eT0-f0-1Gy"/>
+                                        <exclude reference="d2U-d5-mfp"/>
+                                        <exclude reference="bHb-Gh-yGA"/>
+                                        <exclude reference="S0L-cW-F4C"/>
+                                    </mask>
+                                    <mask key="constraints">
+                                        <exclude reference="fgp-je-VNq"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="subviews">
+                                        <include reference="gLe-cb-r5j"/>
+                                        <include reference="eT0-f0-1Gy"/>
+                                        <include reference="d2U-d5-mfp"/>
+                                        <include reference="bHb-Gh-yGA"/>
+                                        <include reference="S0L-cW-F4C"/>
+                                    </mask>
+                                    <mask key="constraints">
+                                        <include reference="fgp-je-VNq"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ymY-96-zkx">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="Cancel"/>
+                                <connections>
+                                    <action selector="cancelEvent" destination="vXZ-lx-hvc" eventType="touchUpInside" id="BIr-Ja-lLJ"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PIx-gt-d39">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="Done"/>
+                                <connections>
+                                    <action selector="addEvent" destination="vXZ-lx-hvc" eventType="touchUpInside" id="9qF-pr-3lK"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="T1w-UY-QHC" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="1TS-li-VrB"/>
+                            <constraint firstItem="ZPD-eB-kRA" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="59J-xp-B4Q"/>
+                            <constraint firstItem="ZPD-eB-kRA" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" constant="71" id="5bS-43-HCL"/>
+                            <constraint firstItem="PIx-gt-d39" firstAttribute="trailing" secondItem="fDe-SH-HDN" secondAttribute="trailing" id="5t2-a8-m5B"/>
+                            <constraint firstItem="T1w-UY-QHC" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" constant="103" id="9hA-gc-8YQ"/>
+                            <constraint firstItem="xf5-AN-qLk" firstAttribute="centerX" secondItem="ZPD-eB-kRA" secondAttribute="centerX" id="H78-2a-9fG"/>
+                            <constraint firstItem="T1w-UY-QHC" firstAttribute="top" secondItem="ZPD-eB-kRA" secondAttribute="bottom" constant="8" symbolic="YES" id="IfR-Rn-lpW"/>
+                            <constraint firstItem="PIx-gt-d39" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="5" id="Kuj-IL-Red"/>
+                            <constraint firstItem="T1w-UY-QHC" firstAttribute="leading" secondItem="ZPD-eB-kRA" secondAttribute="leading" id="Lhg-3p-WNM"/>
+                            <constraint firstItem="izK-WF-YDE" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="TxE-T0-Cja"/>
+                            <constraint firstItem="xf5-AN-qLk" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="8" symbolic="YES" id="XNU-W1-hVv"/>
+                            <constraint firstItem="ymY-96-zkx" firstAttribute="leading" secondItem="izK-WF-YDE" secondAttribute="leading" id="bfy-Is-IHF"/>
+                            <constraint firstItem="fzU-Ad-r5k" firstAttribute="trailing" secondItem="T1w-UY-QHC" secondAttribute="trailing" id="ciF-lJ-yuI"/>
+                            <constraint firstItem="fzU-Ad-r5k" firstAttribute="leading" secondItem="T1w-UY-QHC" secondAttribute="leading" id="gNL-Sy-KIO"/>
+                            <constraint firstItem="ymY-96-zkx" firstAttribute="top" secondItem="izK-WF-YDE" secondAttribute="top" id="ivQ-gv-Or1"/>
+                            <constraint firstItem="fzU-Ad-r5k" firstAttribute="top" secondItem="T1w-UY-QHC" secondAttribute="bottom" constant="8" symbolic="YES" id="juC-C2-xSI"/>
+                            <constraint firstItem="ZPD-eB-kRA" firstAttribute="trailing" secondItem="fDe-SH-HDN" secondAttribute="trailing" id="k9N-Wl-OHl"/>
+                            <constraint firstItem="ZPD-eB-kRA" firstAttribute="top" secondItem="fDe-SH-HDN" secondAttribute="bottom" constant="16" id="mGp-kn-cTe"/>
+                            <constraint firstItem="izK-WF-YDE" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="5" id="noP-lz-cVf"/>
+                            <constraint firstItem="T1w-UY-QHC" firstAttribute="trailing" secondItem="ZPD-eB-kRA" secondAttribute="trailing" id="oay-Ad-lAp"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="fDe-SH-HDN"/>
+                                <exclude reference="fzU-Ad-r5k"/>
+                                <exclude reference="ymY-96-zkx"/>
+                                <exclude reference="PIx-gt-d39"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="5t2-a8-m5B"/>
+                                <exclude reference="Kuj-IL-Red"/>
+                                <exclude reference="bfy-Is-IHF"/>
+                                <exclude reference="ivQ-gv-Or1"/>
+                                <exclude reference="ciF-lJ-yuI"/>
+                                <exclude reference="gNL-Sy-KIO"/>
+                                <exclude reference="juC-C2-xSI"/>
+                                <exclude reference="5bS-43-HCL"/>
+                                <exclude reference="k9N-Wl-OHl"/>
+                                <exclude reference="mGp-kn-cTe"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="fDe-SH-HDN"/>
+                                <include reference="fzU-Ad-r5k"/>
+                                <include reference="ymY-96-zkx"/>
+                                <include reference="PIx-gt-d39"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="5t2-a8-m5B"/>
+                                <include reference="Kuj-IL-Red"/>
+                                <include reference="bfy-Is-IHF"/>
+                                <include reference="ivQ-gv-Or1"/>
+                                <include reference="ciF-lJ-yuI"/>
+                                <include reference="gNL-Sy-KIO"/>
+                                <include reference="juC-C2-xSI"/>
+                                <include reference="5bS-43-HCL"/>
+                                <include reference="k9N-Wl-OHl"/>
+                                <include reference="mGp-kn-cTe"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="addButton" destination="fDe-SH-HDN" id="qpx-Jx-GJU"/>
+                        <outlet property="calendarView" destination="T1w-UY-QHC" id="D3D-pv-Xhz"/>
+                        <outlet property="cancelButton" destination="ymY-96-zkx" id="1Dq-aM-KmA"/>
+                        <outlet property="doneButton" destination="PIx-gt-d39" id="yG2-fU-B2b"/>
+                        <outlet property="eventDuration" destination="bHb-Gh-yGA" id="s8J-LP-XIi"/>
+                        <outlet property="eventTitle" destination="eT0-f0-1Gy" id="jXB-Xg-BeY"/>
+                        <outlet property="eventView" destination="fzU-Ad-r5k" id="Mxr-Nr-1Dn"/>
+                        <outlet property="menuView" destination="ZPD-eB-kRA" id="zjt-49-rDh"/>
+                        <outlet property="monthLabel" destination="xf5-AN-qLk" id="fGT-h7-JSE"/>
+                        <outlet property="timeLineBar" destination="gLe-cb-r5j" id="iON-T9-EWS"/>
+                        <outlet property="todayButton" destination="izK-WF-YDE" id="QIf-zh-jji"/>
+                        <outlet property="workLoadBar" destination="S0L-cW-F4C" id="1ts-XW-vru"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="18" y="293"/>
+        </scene>
+    </scenes>
+</document>
