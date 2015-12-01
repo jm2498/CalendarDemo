@@ -9,13 +9,12 @@
 import UIKit
 import EventKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     // MARK: - Properties
     @IBOutlet weak var calendarView: CVCalendarView!
     @IBOutlet weak var menuView: CVCalendarMenuView!
     @IBOutlet weak var monthLabel: UILabel!
     @IBOutlet weak var eventView: UIView!
-    @IBOutlet weak var eventTable: UITableView!
     @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var todayButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
@@ -24,14 +23,18 @@ class ViewController: UIViewController {
 	@IBOutlet weak var eventDuration: UITextField!
 	@IBOutlet weak var workLoadBar: UISlider!
 	@IBOutlet weak var timeLineBar: UISlider!
+	@IBOutlet weak var endDate: UIDatePicker!
+	@IBOutlet weak var eventTabel: UITableView!
     
     
     var shouldShowDaysOut = true
     var animationFinished = true
     
     let eventStore = EKEventStore();
-    let calendar = NSCalendar.currentCalendar();
+    let calendar = NSCalendar.currentCalendar()
     var selectedDay: CVCalendarDayView!
+	let dateFormatter = NSDateFormatter()
+	var eventDays = [CVCalendarDayView]()
     
     // MARK: - Life cycle
     
@@ -57,6 +60,28 @@ class ViewController: UIViewController {
 	func clearEventInfo() {
 		eventTitle.text?.removeAll()
 		workLoadBar.value = 50.0
+	}
+	
+	func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+		return 1
+	}
+	
+	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		return selectedDay.eventList.count
+	}
+	
+	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+		
+		let cell = tableView.dequeueReusableCellWithIdentifier("EventTableViewCell", forIndexPath: indexPath)
+		
+		let event = selectedDay.eventList[indexPath.row]
+		dateFormatter.dateFormat = "HH:mm"
+		let start = dateFormatter.stringFromDate(event.startDate)
+		let end = dateFormatter.stringFromDate(event.endDate)
+		let title = event.title
+		cell.textLabel!.text = "\(start) - \(end) : \(title)"
+		
+		return cell
 	}
 }
 
@@ -86,7 +111,9 @@ extension ViewController: CVCalendarViewDelegate, CVCalendarMenuViewDelegate {
     
     func didSelectDayView(dayView: CVCalendarDayView) {
         selectedDay = dayView
+		eventTabel.reloadData()
         print("\(dayView.date.commonDescription) is selected!")
+		print(selectedDay.weekdayIndex)
     }
     
     func presentedDateUpdated(date: CVDate) {
@@ -280,36 +307,73 @@ extension ViewController {
     @IBAction func setEventInfo() {
         addButton.hidden = true
         todayButton.hidden = true
+		eventTabel.hidden = true
         doneButton.hidden = false
         cancelButton.hidden = false
         eventView.hidden = false
 		selectedDay.setDeselectedWithClearing(true)
+		for week in selectedDay.weekView.monthView.weekViews {
+			for day in week.dayViews {
+				day.workLoadMarkers[0]?.hidden = false
+			}
+		}
     }
     
     @IBAction func cancelEvent() {
         addButton.hidden = false
         todayButton.hidden = false
+		eventTabel.hidden = false
         doneButton.hidden = true
         cancelButton.hidden = true
         eventView.hidden = true
 		self.clearEventInfo()
 		selectedDay.setSelectedWithType(.Single)
+		for week in selectedDay.weekView.monthView.weekViews {
+			for day in week.dayViews {
+				day.workLoadMarkers[0]?.hidden = true
+			}
+		}
     }
     
     @IBAction func addEvent() {
         addButton.hidden = false
         todayButton.hidden = false
+		eventTabel.hidden = false
         doneButton.hidden = true
         cancelButton.hidden = true
         eventView.hidden = true
 		selectedDay.setSelectedWithType(.Single)
+		let event = EKEvent(eventStore: eventStore)
+		if (eventTitle.text! == "") {
+			event.title = "New Event"
+		} else {
+			event.title = eventTitle.text!
+		}
+		event.startDate = NSDate()
+		event.endDate = endDate.date
+		selectedDay.eventList.append(event)
+		selectedDay.setupDotMarker()
+		eventTabel.reloadData()
+		for week in selectedDay.weekView.monthView.weekViews {
+			for day in week.dayViews {
+				day.workLoadMarkers[0]?.hidden = true
+			}
+		}
     }
 	
 	@IBAction func changeWorkLoad(sender: UISlider) {
+		let start = selectedDay.date.getDay
+		dateFormatter.dateFormat = "d"
+		let end = Int(dateFormatter.stringFromDate(endDate.date))!
+		let numberOfDays = end - start
+		selectedDay.setupWorkLoadMarker(CGFloat(workLoadBar.value/100*10))
+		for index in 0...numberOfDays-1 {
+			selectedDay.weekView.dayViews[selectedDay.weekdayIndex+index].setupWorkLoadMarker(CGFloat(workLoadBar.value/100*10))
+		}
 		if (workLoadBar.value/100*10 + selectedDay.workLoad > 10) {
 			//workLoadBar
 		}
-		selectedDay.setupWorkLoadMarker(CGFloat(workLoadBar.value/100*10))
+		
 	}
     
 }

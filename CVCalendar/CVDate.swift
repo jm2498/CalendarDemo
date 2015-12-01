@@ -72,6 +72,10 @@ extension CVDate {
             return "\(day) \(month), \(year)"
         }
     }
+	
+	public var getDay: Int {
+		return day
+	}
 }
 
 private extension CVDate {
