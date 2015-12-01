@@ -39,7 +39,7 @@ public final class CVAuxiliaryView: UIView {
         strokeColor = UIColor.clearColor()
         fillColor = UIColor.colorFromCode(0xe74c3c)
         
-        layer.cornerRadius = 5
+        //layer.cornerRadius = 5
         backgroundColor = .clearColor()
     }
     
@@ -101,8 +101,8 @@ extension CVAuxiliaryView {
     
     func rightFlagPath() -> UIBezierPath {
         let appearance = dayView.calendarView.appearance
-        let offset = appearance.spaceBetweenDayViews!
-        
+//        let offset = appearance.spaceBetweenDayViews!
+		
         let flag = UIBezierPath()
         flag.moveToPoint(CGPointMake(bounds.width / 2, bounds.height / 2 - radius))
         flag.addLineToPoint(CGPointMake(bounds.width, bounds.height / 2 - radius))
@@ -131,16 +131,14 @@ extension CVAuxiliaryView {
     }
     
     func rectPath() -> UIBezierPath {
-        let midX = bounds.width / 2
-        let midY = bounds.height / 2
-        
-        let appearance = dayView.calendarView.appearance
-        let offset = appearance.spaceBetweenDayViews!
-        
-        print("offset = \(offset)")
-        
-        let path = UIBezierPath(rect: CGRectMake(0 - offset, midY - radius, bounds.width + offset / 2, radius * 2))
-        
+//        let midX = bounds.width / 2
+//        let midY = bounds.height / 2
+		
+//        let appearance = dayView.calendarView.appearance
+//        let offset = appearance.spaceBetweenDayViews!
+		
+        let path = UIBezierPath(rect: CGRectMake(0, 0, bounds.width, bounds.height))
+		
         return path
     }
 }

@@ -283,6 +283,7 @@ extension ViewController {
         doneButton.hidden = false
         cancelButton.hidden = false
         eventView.hidden = false
+		selectedDay.setDeselectedWithClearing(true)
     }
     
     @IBAction func cancelEvent() {
@@ -292,6 +293,7 @@ extension ViewController {
         cancelButton.hidden = true
         eventView.hidden = true
 		self.clearEventInfo()
+		selectedDay.setSelectedWithType(.Single)
     }
     
     @IBAction func addEvent() {
@@ -300,10 +302,14 @@ extension ViewController {
         doneButton.hidden = true
         cancelButton.hidden = true
         eventView.hidden = true
+		selectedDay.setSelectedWithType(.Single)
     }
 	
 	@IBAction func changeWorkLoad(sender: UISlider) {
-		//selectedDay.setupWorkLoad(CGFloat(workLoadBar.value/100)*selectedDay.frame.height)
+		if (workLoadBar.value/100*10 + selectedDay.workLoad > 10) {
+			//workLoadBar
+		}
+		selectedDay.setupWorkLoadMarker(CGFloat(workLoadBar.value/100*10))
 	}
     
 }

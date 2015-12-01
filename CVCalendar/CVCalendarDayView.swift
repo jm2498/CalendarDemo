@@ -20,11 +20,13 @@ public final class CVCalendarDayView: UIView {
     public var circleView: CVAuxiliaryView?
     public var topMarker: CALayer?
     public var dotMarkers = [CVAuxiliaryView?]()
+	public var workLoadMarkers = [CVAuxiliaryView?]()
     
     public var isOut = false
     public var isCurrentDay = false
     
     public var eventList = [EKEvent]()
+	public var workLoad: Float = 0.0
     
     public weak var monthView: CVCalendarMonthView! {
         get {
@@ -84,6 +86,7 @@ public final class CVCalendarDayView: UIView {
         labelSetup()
         setupDotMarker()
         topMarkerSetup()
+		setupWorkLoadMarker(CGFloat(workLoad))
         
         if (frame.width > 0) {
             preliminarySetup()
@@ -189,6 +192,7 @@ extension CVCalendarDayView {
         }
         
         addSubview(dayLabel!)
+		
     }
 
     public func preliminarySetup() {
@@ -246,7 +250,7 @@ extension CVCalendarDayView {
     public func setupDotMarker() {
         for (index, dotMarker) in dotMarkers.enumerate() {
             dotMarkers[index]!.removeFromSuperview()
-            dotMarkers[index] = nil
+            dotMarkers.removeFirst()
         }
         
         if let delegate = calendarView.delegate {
@@ -265,12 +269,15 @@ extension CVCalendarDayView {
 			let markerFrame = CGRectMake(0, 0, width, height)
 			
 			let dotMarker = CVAuxiliaryView(dayView: self, rect: markerFrame, shape: .Circle)
-			dotMarker.fillColor = UIColor.blackColor()
+			dotMarker.fillColor = UIColor.grayColor()
 			dotMarker.center = CGPointMake(frame.width/2, frame.height-3)
 			insertSubview(dotMarker, atIndex: 0)
 			
 			dotMarker.setNeedsDisplay()
 			dotMarkers.append(dotMarker)
+			if (eventList.isEmpty) {
+				dotMarker.hidden = true
+			}
                 //}
                 
 //                let coordinator = calendarView.coordinator
@@ -280,6 +287,22 @@ extension CVCalendarDayView {
            // }
         }
     }
+	
+	public func setupWorkLoadMarker(height: CGFloat) {
+		for (index, workLoadMarker) in workLoadMarkers.enumerate() {
+				workLoadMarkers[index]!.removeFromSuperview()
+				workLoadMarkers.removeFirst()
+		}
+		
+		let markerFrame = CGRectMake(frame.width/2-3, frame.height-height-6, 6, height)
+		let workLoadMarker = CVAuxiliaryView(dayView: self, rect: markerFrame, shape: .Rect)
+		workLoadMarker.fillColor = UIColor.blueColor()
+		//workLoadMarker.center = CGPointMake(frame.width/2, frame.height/2)
+		insertSubview(workLoadMarker, atIndex: 0)
+		
+		workLoadMarker.setNeedsDisplay()
+		workLoadMarkers.append(workLoadMarker)
+	}
 }
 
 // MARK: - Dot marker movement
@@ -431,7 +454,7 @@ extension CVCalendarDayView {
             }
         }
 		
-		let circleFrame = CGRectMake(0, 0, frame.width/1.5, frame.height/1.5)
+		let circleFrame = CGRectMake(0, 0, frame.width/1.8, frame.height/1.8)
         if let circleView = circleView where circleView.frame != dayLabel.bounds {
             circleView.frame = circleFrame
         } else {
@@ -487,6 +510,7 @@ extension CVCalendarDayView {
 extension CVCalendarDayView {
     public func reloadContent() {
         setupDotMarker()
+		setupWorkLoadMarker(CGFloat(workLoad))
         dayLabel?.frame = bounds
         
         let shouldShowDaysOut = calendarView.shouldShowWeekdaysOut!
