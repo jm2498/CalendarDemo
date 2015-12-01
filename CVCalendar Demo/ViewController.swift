@@ -35,6 +35,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var selectedDay: CVCalendarDayView!
 	let dateFormatter = NSDateFormatter()
 	var eventDays = [CVCalendarDayView]()
+	var workHours = [Float]()
     
     // MARK: - Life cycle
     
@@ -83,6 +84,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 		
 		return cell
 	}
+	
+	func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+		return true
+	}
+	
+	func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+		if (editingStyle == UITableViewCellEditingStyle.Delete) {
+			// handle delete (by removing the data from your array and updating the tableview)
+		}
+	}
+	
 }
 
 // MARK: - CVCalendarViewDelegate & CVCalendarMenuViewDelegate
@@ -113,7 +125,6 @@ extension ViewController: CVCalendarViewDelegate, CVCalendarMenuViewDelegate {
         selectedDay = dayView
 		eventTabel.reloadData()
         print("\(dayView.date.commonDescription) is selected!")
-		print(selectedDay.weekdayIndex)
     }
     
     func presentedDateUpdated(date: CVDate) {
@@ -373,8 +384,22 @@ extension ViewController {
 		if (workLoadBar.value/100*10 + selectedDay.workLoad > 10) {
 			//workLoadBar
 		}
-		
 	}
+	
+	@IBAction func changeTimeLine(sender: UISlider) {
+		let start = selectedDay.date.getDay
+		dateFormatter.dateFormat = "d"
+		let end = Int(dateFormatter.stringFromDate(endDate.date))!
+		let numberOfDays = end - start
+		selectedDay.setupWorkLoadMarker(CGFloat(timeLineBar.value/100*10))
+		for index in 0...numberOfDays-1 {
+			selectedDay.weekView.dayViews[selectedDay.weekdayIndex+index].setupWorkLoadMarker(CGFloat(timeLineBar.value/100*10))
+		}
+		if (timeLineBar.value/100*10 + selectedDay.workLoad > 10) {
+			//workLoadBar
+		}
+	}
+	
     
 }
 

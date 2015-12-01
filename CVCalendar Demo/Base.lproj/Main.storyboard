@@ -137,25 +137,6 @@
                                             </mask>
                                         </variation>
                                     </textField>
-                                    <slider opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="gLe-cb-r5j">
-                                        <rect key="frame" x="0.0" y="-15" width="118" height="31"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="Djv-si-ncS"/>
-                                            <constraint firstAttribute="width" constant="160" id="eyP-1F-wNz"/>
-                                        </constraints>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="Djv-si-ncS"/>
-                                                <exclude reference="eyP-1F-wNz"/>
-                                            </mask>
-                                        </variation>
-                                        <variation key="widthClass=compact">
-                                            <mask key="constraints">
-                                                <include reference="Djv-si-ncS"/>
-                                                <include reference="eyP-1F-wNz"/>
-                                            </mask>
-                                        </variation>
-                                    </slider>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="50" minValue="0.0" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="S0L-cW-F4C">
                                         <rect key="frame" x="0.0" y="-15" width="118" height="31"/>
                                         <constraints>
@@ -176,6 +157,28 @@
                                         </variation>
                                         <connections>
                                             <action selector="changeWorkLoad:" destination="vXZ-lx-hvc" eventType="valueChanged" id="JBa-yl-A1A"/>
+                                        </connections>
+                                    </slider>
+                                    <slider opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="50" minValue="0.0" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="gLe-cb-r5j">
+                                        <rect key="frame" x="0.0" y="-15" width="118" height="31"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="Djv-si-ncS"/>
+                                            <constraint firstAttribute="width" constant="160" id="eyP-1F-wNz"/>
+                                        </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="Djv-si-ncS"/>
+                                                <exclude reference="eyP-1F-wNz"/>
+                                            </mask>
+                                        </variation>
+                                        <variation key="widthClass=compact">
+                                            <mask key="constraints">
+                                                <include reference="Djv-si-ncS"/>
+                                                <include reference="eyP-1F-wNz"/>
+                                            </mask>
+                                        </variation>
+                                        <connections>
+                                            <action selector="changeTimeLine:" destination="vXZ-lx-hvc" eventType="valueChanged" id="sdr-Xd-A56"/>
                                         </connections>
                                     </slider>
                                     <datePicker contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="d2U-d5-mfp">
@@ -218,8 +221,8 @@
                                     <mask key="subviews">
                                         <exclude reference="eT0-f0-1Gy"/>
                                         <exclude reference="bHb-Gh-yGA"/>
-                                        <exclude reference="gLe-cb-r5j"/>
                                         <exclude reference="S0L-cW-F4C"/>
+                                        <exclude reference="gLe-cb-r5j"/>
                                         <exclude reference="d2U-d5-mfp"/>
                                     </mask>
                                     <mask key="constraints">
@@ -240,8 +243,8 @@
                                     <mask key="subviews">
                                         <include reference="eT0-f0-1Gy"/>
                                         <include reference="bHb-Gh-yGA"/>
-                                        <include reference="gLe-cb-r5j"/>
                                         <include reference="S0L-cW-F4C"/>
+                                        <include reference="gLe-cb-r5j"/>
                                         <include reference="d2U-d5-mfp"/>
                                     </mask>
                                     <mask key="constraints">
