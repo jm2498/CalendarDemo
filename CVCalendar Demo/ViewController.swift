@@ -38,6 +38,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 	var eventDays = [CVCalendarDayView]()
 	var workHours = [Float]()
 	var today: CVCalendarDayView!
+	var predict: NSPredicate!
     
     // MARK: - Life cycle
     
@@ -52,6 +53,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         selectedDay = calendarView.coordinator.selectedDayView
 		today = calendarView.coordinator.selectedDayView
+		
     }
 
     override func viewDidLayoutSubviews() {
@@ -60,6 +62,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         calendarView.commitCalendarViewUpdate()
         menuView.commitMenuViewUpdate()
     }
+	
+	override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?){
+		view.endEditing(true)
+		super.touchesBegan(touches, withEvent: event)
+	}
 	
 	func clearEventInfo() {
 		eventTitle.text?.removeAll()
@@ -140,6 +147,9 @@ extension ViewController: CVCalendarViewDelegate, CVCalendarMenuViewDelegate {
         selectedDay = dayView
 		eventTabel.reloadData()
         print("\(dayView.date.commonDescription) is selected!")
+//		predict = eventStore.predicateForEventsWithStartDate(NSDate(), endDate: NSDate(), calendars: nil)
+//		let events = eventStore.eventsMatchingPredicate(predict)
+//		print(events[0])
     }
     
     func presentedDateUpdated(date: CVDate) {
@@ -352,7 +362,12 @@ extension ViewController {
 		event.endDate = endDate.date
 		today.eventList.append(event)
 		today.setupDotMarker()
-		//event.calendar = eventStore.defaultCalendarForNewEvents
+//		event.calendar = eventStore.defaultCalendarForNewEvents
+//		do {
+//			try eventStore.saveEvent(event, span: .ThisEvent)
+//		} catch {
+//			print("Bad thing happened")
+//		}
 		eventTabel.reloadData()
 		
     }
@@ -362,7 +377,7 @@ extension ViewController {
 		dateFormatter.dateFormat = "d"
 		let end = Int(dateFormatter.stringFromDate(endDate.date))!
 		let numberOfDays = end - start + 1
-		let numberOfWeeks =
+		//let numberOfWeeks =
 		today.setupWorkLoadMarker(CGFloat(sender.value/100*50))
 		for index in 0...numberOfDays-1 {
 			today.weekView.dayViews[today.weekdayIndex+index].setupWorkLoadMarker(CGFloat(sender.value/100*50))
