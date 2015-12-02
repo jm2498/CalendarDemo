@@ -25,17 +25,19 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 	@IBOutlet weak var timeLineBar: UISlider!
 	@IBOutlet weak var endDate: UIDatePicker!
 	@IBOutlet weak var eventTabel: UITableView!
+	@IBOutlet weak var endDateDetail: UILabel!
     
     
-    var shouldShowDaysOut = true
+    var shouldShowDaysOut = false
     var animationFinished = true
     
-    let eventStore = EKEventStore();
+    let eventStore = EKEventStore()
     let calendar = NSCalendar.currentCalendar()
-    var selectedDay: CVCalendarDayView!
 	let dateFormatter = NSDateFormatter()
+    var selectedDay: CVCalendarDayView!
 	var eventDays = [CVCalendarDayView]()
 	var workHours = [Float]()
+	var today: CVCalendarDayView!
     
     // MARK: - Life cycle
     
@@ -49,6 +51,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
         
         selectedDay = calendarView.coordinator.selectedDayView
+		today = calendarView.coordinator.selectedDayView
     }
 
     override func viewDidLayoutSubviews() {
@@ -61,6 +64,18 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 	func clearEventInfo() {
 		eventTitle.text?.removeAll()
 		workLoadBar.value = 50.0
+		timeLineBar.value = 50.0
+		eventDuration.text?.removeAll()
+		endDate.date = NSDate()
+	}
+	
+	func setupViews() {
+		addButton.hidden = !addButton.hidden
+		todayButton.hidden = !todayButton.hidden
+		eventTabel.hidden = !eventTabel.hidden
+		doneButton.hidden = !doneButton.hidden
+		cancelButton.hidden = !cancelButton.hidden
+		eventView.hidden = !eventView.hidden
 	}
 	
 	func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -316,44 +331,17 @@ extension ViewController {
     }
     
     @IBAction func setEventInfo() {
-        addButton.hidden = true
-        todayButton.hidden = true
-		eventTabel.hidden = true
-        doneButton.hidden = false
-        cancelButton.hidden = false
-        eventView.hidden = false
-		selectedDay.setDeselectedWithClearing(true)
-		for week in selectedDay.weekView.monthView.weekViews {
-			for day in week.dayViews {
-				day.workLoadMarkers[0]?.hidden = false
-			}
-		}
+        self.setupViews()
     }
     
     @IBAction func cancelEvent() {
-        addButton.hidden = false
-        todayButton.hidden = false
-		eventTabel.hidden = false
-        doneButton.hidden = true
-        cancelButton.hidden = true
-        eventView.hidden = true
+        self.setupViews()
 		self.clearEventInfo()
-		selectedDay.setSelectedWithType(.Single)
-		for week in selectedDay.weekView.monthView.weekViews {
-			for day in week.dayViews {
-				day.workLoadMarkers[0]?.hidden = true
-			}
-		}
+		
     }
     
     @IBAction func addEvent() {
-        addButton.hidden = false
-        todayButton.hidden = false
-		eventTabel.hidden = false
-        doneButton.hidden = true
-        cancelButton.hidden = true
-        eventView.hidden = true
-		selectedDay.setSelectedWithType(.Single)
+        self.setupViews()
 		let event = EKEvent(eventStore: eventStore)
 		if (eventTitle.text! == "") {
 			event.title = "New Event"
@@ -362,45 +350,41 @@ extension ViewController {
 		}
 		event.startDate = NSDate()
 		event.endDate = endDate.date
-		selectedDay.eventList.append(event)
-		selectedDay.setupDotMarker()
+		today.eventList.append(event)
+		today.setupDotMarker()
+		//event.calendar = eventStore.defaultCalendarForNewEvents
 		eventTabel.reloadData()
-		for week in selectedDay.weekView.monthView.weekViews {
-			for day in week.dayViews {
-				day.workLoadMarkers[0]?.hidden = true
-			}
-		}
+		
     }
 	
 	@IBAction func changeWorkLoad(sender: UISlider) {
-		let start = selectedDay.date.getDay
+		let start = today.date.getDay
 		dateFormatter.dateFormat = "d"
 		let end = Int(dateFormatter.stringFromDate(endDate.date))!
-		let numberOfDays = end - start
-		selectedDay.setupWorkLoadMarker(CGFloat(workLoadBar.value/100*10))
+		let numberOfDays = end - start + 1
+		let numberOfWeeks =
+		today.setupWorkLoadMarker(CGFloat(sender.value/100*50))
 		for index in 0...numberOfDays-1 {
-			selectedDay.weekView.dayViews[selectedDay.weekdayIndex+index].setupWorkLoadMarker(CGFloat(workLoadBar.value/100*10))
-		}
-		if (workLoadBar.value/100*10 + selectedDay.workLoad > 10) {
-			//workLoadBar
+			today.weekView.dayViews[today.weekdayIndex+index].setupWorkLoadMarker(CGFloat(sender.value/100*50))
 		}
 	}
 	
 	@IBAction func changeTimeLine(sender: UISlider) {
-		let start = selectedDay.date.getDay
-		dateFormatter.dateFormat = "d"
-		let end = Int(dateFormatter.stringFromDate(endDate.date))!
-		let numberOfDays = end - start
-		selectedDay.setupWorkLoadMarker(CGFloat(timeLineBar.value/100*10))
-		for index in 0...numberOfDays-1 {
-			selectedDay.weekView.dayViews[selectedDay.weekdayIndex+index].setupWorkLoadMarker(CGFloat(timeLineBar.value/100*10))
-		}
-		if (timeLineBar.value/100*10 + selectedDay.workLoad > 10) {
-			//workLoadBar
+		
+	}
+	
+	@IBAction func changeEndDate(sender: UIDatePicker) {
+		dateFormatter.dateFormat = "MM-dd"
+		let todayDate = dateFormatter.stringFromDate(NSDate())
+		let datePickerDate = dateFormatter.stringFromDate(sender.date)
+		if (todayDate != datePickerDate) {
+			workLoadBar.enabled = true
+			timeLineBar.enabled = true
 		}
 	}
 	
-    
+	
+	
 }
 
 // MARK: - Convenience API Demo

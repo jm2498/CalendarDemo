@@ -293,8 +293,7 @@ extension CVCalendarDayView {
 				workLoadMarkers[index]!.removeFromSuperview()
 				workLoadMarkers.removeFirst()
 		}
-		
-		let markerFrame = CGRectMake(frame.width/2-3, frame.height-height-6, 6, height)
+		let markerFrame = CGRectMake(frame.width-6, frame.height-height, 6, height)
 		let workLoadMarker = CVAuxiliaryView(dayView: self, rect: markerFrame, shape: .Rect)
 		workLoadMarker.fillColor = UIColor.blueColor()
 		//workLoadMarker.center = CGPointMake(frame.width/2, frame.height/2)
