@@ -435,7 +435,7 @@ extension ViewController {
 					}
 				}
 				else {
-					for index in 1...self.numOfWeeks {
+					for index in 1...(self.numOfWeeks-1) {
 						for day in today.weekView.monthView.weekViews[today.weekView.index+index].dayViews {
 							eventDays.append(day)
 						}
