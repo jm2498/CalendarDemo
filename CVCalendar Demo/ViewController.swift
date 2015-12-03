@@ -42,6 +42,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 	var numOfWeeks: Int!
 	var totalHoursToWork: Float!
     
+    var Time = 10
+    var Timer = NSTimer()
+    
+    
     // MARK: - Life cycle
     
     override func viewDidLoad() {
@@ -55,7 +59,30 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         self.selectedDay = calendarView.coordinator.selectedDayView
 		today = calendarView.coordinator.selectedDayView
+        
+         Timer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: Selector("Notification"), userInfo: nil, repeats: true)
 		
+    }
+    
+    //Notification func
+    func Notification(){
+        Time -= 1
+        
+        if(Time == 0){
+            
+            var Notification = UILocalNotification()
+            
+            
+            Notification.alertAction = "Enter App"
+            Notification.alertBody = "Push Event list here"
+            
+            Notification.fireDate = NSDate(timeIntervalSinceNow: 0)
+            
+            UIApplication.sharedApplication().scheduleLocalNotification(Notification)
+            
+            Timer.invalidate()
+            
+        }
     }
 
     override func viewDidLayoutSubviews() {
