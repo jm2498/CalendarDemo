@@ -403,7 +403,6 @@ extension ViewController {
 	}
 	
     @IBAction func addEvent() {
-		print(workHours)
 		if (eventDays.isEmpty) {
 			let event = EKEvent(eventStore: self.eventStore)
 			if (eventTitle.text! == "") {
@@ -417,7 +416,7 @@ extension ViewController {
 			do {
 				try self.eventStore.saveEvent(event, span: .ThisEvent)
 			} catch {
-				print("Bad thing happened")
+				print((error))
 			}
 			today.eventList.append(event)
 			today.setupDotMarker()
@@ -430,12 +429,14 @@ extension ViewController {
 				} else {
 					event.title = eventTitle.text!
 				}
+				event.startDate = eventDays[index].date.getDate
+				event.endDate = eventDays[index].date.getDate
 				event.allDay = true
-				event.calendar = eventStore.defaultCalendarForNewEvents
+				event.calendar = self.eventStore.defaultCalendarForNewEvents
 				do {
-					try eventStore.saveEvent(event, span: .ThisEvent)
+					try self.eventStore.saveEvent(event, span: .ThisEvent)
 				} catch {
-					print("Bad thing happened")
+					print((error))
 				}
 				eventDays[index].eventList.append(event)
 				eventDays[index].workLoadList.append(workHours[index])
@@ -456,6 +457,9 @@ extension ViewController {
 		self.average = self.totalHoursToWork / Float(self.numOfDays)
 		for index in 0...(eventDays.count-1) {
 			let workload = self.average
+			if (workload*4.75 + eventDays[index].workLoad > 47.5) {
+				break
+			}
 			eventDays[index].setupWorkLoadMarker(CGFloat(workload*4.75+eventDays[index].workLoad))
 			eventDays[index].workLoadMarkers[0]!.fillColor = UIColor.redColor()
 			workHours.append(workload*4.75)
@@ -472,12 +476,18 @@ extension ViewController {
 		for index in 0...(eventDays.count-1) {
 			if (index <= Int(day)-1) {
 				let workload = self.average*2-Float(Int(day)-(index+1)) * delta
+				if (workload*4.75 + eventDays[index].workLoad > 47.5) {
+					break
+				}
 				eventDays[index].setupWorkLoadMarker(CGFloat(workload*4.75+eventDays[index].workLoad))
 				eventDays[index].workLoadMarkers[0]!.fillColor = UIColor.redColor()
 				workHours.append(workload * 4.75)
 			}
 			else {
 				let workload = self.average*2-Float(index+1-Int(day)) * delta
+				if (workload*4.75 + eventDays[index].workLoad > 47.5) {
+					break
+				}
 				eventDays[index].setupWorkLoadMarker(CGFloat(workload*4.75+eventDays[index].workLoad))
 				eventDays[index].workLoadMarkers[0]!.fillColor = UIColor.redColor()
 				workHours.append(workload * 4.75)
@@ -504,7 +514,6 @@ extension ViewController {
 			self.timeLineBar.maximumValue = Float(self.numOfDays + 1)
 			self.timeLineBar.value = Float(self.numOfDays) / 2.0
 			self.workLoadBar.maximumValue = 10.0 * Float(self.numOfDays)
-			print(numOfDays)
 			
 			if (today.weekdayIndex + numOfDays - 1 <= 7) {
 				for index in 0...(numOfDays-1) {
@@ -535,9 +544,6 @@ extension ViewController {
 						eventDays.append(today.weekView.monthView.weekViews[today.weekView.index+numOfWeeks].dayViews[index])
 					}
 				}
-			}
-			for index in 0...(eventDays.count-1) {
-				print(eventDays[index].date.commonDescription)
 			}
 		}
 	}

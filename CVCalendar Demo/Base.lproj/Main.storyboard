@@ -23,6 +23,9 @@
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                 <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="133" y="28" width="136" height="24"/>
+                                </variation>
                             </label>
                             <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZPD-eB-kRA" customClass="CVCalendarMenuView" customModule="SmartCalendar" customModuleProvider="target">
                                 <rect key="frame" x="16" y="71" width="568" height="24"/>
@@ -298,18 +301,18 @@
                                     </mask>
                                     <mask key="constraints">
                                         <exclude reference="fgp-je-VNq"/>
-                                        <exclude reference="OKC-AI-LmA"/>
-                                        <exclude reference="QAY-pc-3JL"/>
-                                        <exclude reference="Qg4-Zi-Wj3"/>
-                                        <exclude reference="I9X-IX-gJ1"/>
-                                        <exclude reference="TA6-Rn-CUa"/>
-                                        <exclude reference="hyi-Ys-ZAJ"/>
                                         <exclude reference="8u8-IB-1jz"/>
                                         <exclude reference="V1r-4u-A5g"/>
                                         <exclude reference="rwA-1Y-xLK"/>
                                         <exclude reference="FMc-Eu-Akz"/>
                                         <exclude reference="S7Y-za-fVa"/>
                                         <exclude reference="Wz7-cq-Joq"/>
+                                        <exclude reference="OKC-AI-LmA"/>
+                                        <exclude reference="QAY-pc-3JL"/>
+                                        <exclude reference="Qg4-Zi-Wj3"/>
+                                        <exclude reference="I9X-IX-gJ1"/>
+                                        <exclude reference="TA6-Rn-CUa"/>
+                                        <exclude reference="hyi-Ys-ZAJ"/>
                                         <exclude reference="W14-6W-TC4"/>
                                         <exclude reference="ZKH-ae-sT9"/>
                                         <exclude reference="mTI-6q-Pk8"/>
@@ -325,18 +328,18 @@
                                     </mask>
                                     <mask key="constraints">
                                         <include reference="fgp-je-VNq"/>
-                                        <include reference="OKC-AI-LmA"/>
-                                        <include reference="QAY-pc-3JL"/>
-                                        <include reference="Qg4-Zi-Wj3"/>
-                                        <include reference="I9X-IX-gJ1"/>
-                                        <include reference="TA6-Rn-CUa"/>
-                                        <include reference="hyi-Ys-ZAJ"/>
                                         <include reference="8u8-IB-1jz"/>
                                         <include reference="V1r-4u-A5g"/>
                                         <include reference="rwA-1Y-xLK"/>
                                         <include reference="FMc-Eu-Akz"/>
                                         <include reference="S7Y-za-fVa"/>
                                         <include reference="Wz7-cq-Joq"/>
+                                        <include reference="OKC-AI-LmA"/>
+                                        <include reference="QAY-pc-3JL"/>
+                                        <include reference="Qg4-Zi-Wj3"/>
+                                        <include reference="I9X-IX-gJ1"/>
+                                        <include reference="TA6-Rn-CUa"/>
+                                        <include reference="hyi-Ys-ZAJ"/>
                                         <include reference="W14-6W-TC4"/>
                                         <include reference="ZKH-ae-sT9"/>
                                         <include reference="mTI-6q-Pk8"/>
