@@ -76,6 +76,10 @@ extension CVDate {
 	public var getDay: Int {
 		return day
 	}
+	
+	public var getDate: NSDate {
+		return date
+	}
 }
 
 private extension CVDate {

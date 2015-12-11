@@ -26,6 +26,7 @@ public final class CVCalendarDayView: UIView {
     public var isCurrentDay = false
     
     public var eventList = [EKEvent]()
+	public var workLoadList = [Float]()
 	public var workLoad: Float = 0.0
     
     public weak var monthView: CVCalendarMonthView! {
@@ -296,7 +297,7 @@ extension CVCalendarDayView {
 		let markerFrame = CGRectMake(frame.width-6, frame.height-height, 6, height)
 		let workLoadMarker = CVAuxiliaryView(dayView: self, rect: markerFrame, shape: .Rect)
 		workLoadMarker.fillColor = UIColor.blueColor()
-		//workLoadMarker.center = CGPointMake(frame.width/2, frame.height/2)
+		workLoadMarker.hidden = false
 		insertSubview(workLoadMarker, atIndex: 0)
 		
 		workLoadMarker.setNeedsDisplay()
