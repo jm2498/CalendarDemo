@@ -468,14 +468,14 @@ extension ViewController {
 	
 	@IBAction func changeTimeLine(sender: UISlider) {
 		workHours.removeAll()
-		let day = ceil(sender.value)
+		let day = floor(sender.value)
 		let up = (self.average * 2 * Float(self.numOfDays) - self.totalHoursToWork) * 2.0
-		let bot1 = day * (day - 1)
-		let bot2 = (Float(self.numOfDays) - day + 1.0) * (Float(self.numOfDays) - day)
+		let bot1 = day * (day + 1)
+		let bot2 = (Float(self.numOfDays) - day - 1.0) * (Float(self.numOfDays) - day)
 		let delta = up / (bot1 + bot2)
 		for index in 0...(eventDays.count-1) {
-			if (index <= Int(day)-1) {
-				let workload = self.average*2-Float(Int(day)-(index+1)) * delta
+			if (index <= Int(day)) {
+				let workload = self.average*2-Float(Int(day)-index) * delta
 				if (workload*4.75 + eventDays[index].workLoad > 47.5) {
 					break
 				}
@@ -484,7 +484,7 @@ extension ViewController {
 				workHours.append(workload * 4.75)
 			}
 			else {
-				let workload = self.average*2-Float(index+1-Int(day)) * delta
+				let workload = self.average*2-Float(index-Int(day)) * delta
 				if (workload*4.75 + eventDays[index].workLoad > 47.5) {
 					break
 				}
@@ -511,7 +511,7 @@ extension ViewController {
 			if ((self.numOfDays-(7-today.weekdayIndex+1))%7 > 0) {
 				self.numOfWeeks = self.numOfWeeks + 1
 			}
-			self.timeLineBar.maximumValue = Float(self.numOfDays + 1)
+			self.timeLineBar.maximumValue = Float(self.numOfDays)-0.1
 			self.timeLineBar.value = Float(self.numOfDays) / 2.0
 			self.workLoadBar.maximumValue = 10.0 * Float(self.numOfDays)
 			

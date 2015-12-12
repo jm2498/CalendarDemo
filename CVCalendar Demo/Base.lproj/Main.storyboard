@@ -109,7 +109,7 @@
                                         <attributedString key="userComments">
                                             <fragment content="No Event">
                                                 <attributes>
-                                                    <font key="NSFont" metaFont="toolTip"/>
+                                                    <font key="NSFont" metaFont="controlContent" size="11"/>
                                                     <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                 </attributes>
                                             </fragment>
@@ -203,7 +203,7 @@
                                             <action selector="changeEndDate:" destination="vXZ-lx-hvc" eventType="valueChanged" id="Mdu-O8-0Tc"/>
                                         </connections>
                                     </datePicker>
-                                    <slider opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="50" translatesAutoresizingMaskIntoConstraints="NO" id="gLe-cb-r5j">
+                                    <slider opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="31" translatesAutoresizingMaskIntoConstraints="NO" id="gLe-cb-r5j">
                                         <rect key="frame" x="0.0" y="-15" width="118" height="31"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="Djv-si-ncS"/>
