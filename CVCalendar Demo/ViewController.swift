@@ -456,13 +456,42 @@ extension ViewController {
 		self.totalHoursToWork = sender.value
 		self.average = self.totalHoursToWork / Float(self.numOfDays)
 		for index in 0...(eventDays.count-1) {
-			let workload = self.average
-			if (workload*4.75 + eventDays[index].workLoad > 47.5) {
-				break
+			if (floor(self.timeLineBar.value) == floor(Float(self.numOfDays/2))) {
+				let workload = self.average
+				if (workload*4.75 + eventDays[index].workLoad > 47.5) {
+					break
+				}
+				eventDays[index].setupWorkLoadMarker(CGFloat(workload*4.75+eventDays[index].workLoad))
+				eventDays[index].workLoadMarkers[0]!.fillColor = UIColor.redColor()
+				workHours.append(workload*4.75)
 			}
-			eventDays[index].setupWorkLoadMarker(CGFloat(workload*4.75+eventDays[index].workLoad))
-			eventDays[index].workLoadMarkers[0]!.fillColor = UIColor.redColor()
-			workHours.append(workload*4.75)
+			else {
+				let day = floor(self.timeLineBar.value)
+				let up = (self.average * 2 * Float(self.numOfDays) - self.totalHoursToWork) * 2.0
+				let bot1 = day * (day + 1)
+				let bot2 = (Float(self.numOfDays) - day - 1.0) * (Float(self.numOfDays) - day)
+				let delta = up / (bot1 + bot2)
+				for index in 0...(eventDays.count-1) {
+					if (index <= Int(day)) {
+						let workload = self.average*2-Float(Int(day)-index) * delta
+						if (workload*4.75 + eventDays[index].workLoad > 47.5) {
+							break
+						}
+						eventDays[index].setupWorkLoadMarker(CGFloat(workload*4.75+eventDays[index].workLoad))
+						eventDays[index].workLoadMarkers[0]!.fillColor = UIColor.redColor()
+						workHours.append(workload * 4.75)
+					}
+					else {
+						let workload = self.average*2-Float(index-Int(day)) * delta
+						if (workload*4.75 + eventDays[index].workLoad > 47.5) {
+							break
+						}
+						eventDays[index].setupWorkLoadMarker(CGFloat(workload*4.75+eventDays[index].workLoad))
+						eventDays[index].workLoadMarkers[0]!.fillColor = UIColor.redColor()
+						workHours.append(workload * 4.75)
+					}
+				}
+			}
 		}
 	}
 	
